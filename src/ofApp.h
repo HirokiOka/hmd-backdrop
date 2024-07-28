@@ -22,6 +22,7 @@ class ofApp : public ofBaseApp{
 
     ofTrueTypeFont futura;
     ofTrueTypeFont optima;
+    ofTrueTypeFont pageFont;
     //string array of names
     string HMD_NAMES[8] = {"Vuzix z100", "Meta Quest 3", "Vuzix M4000", "Xreal Air 2",
       "Apple Vision Pro", "Moverio BT-40S", "Hololens 2", "Monocle"};
@@ -35,5 +36,7 @@ class ofApp : public ofBaseApp{
 
     ofImage HMD_IMAGES[8];
     ofImage logo;
+
+    ofColor scarlet = ofColor(187, 11, 11);
 
 };
