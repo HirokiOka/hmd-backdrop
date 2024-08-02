@@ -7,7 +7,7 @@ class ofApp : public ofBaseApp{
 		void setup();
 		void update();
 		void draw();
-		
+
 		void keyPressed(int key);
 		void keyReleased(int key);
 		void mouseMoved(int x, int y);
@@ -22,6 +22,8 @@ class ofApp : public ofBaseApp{
 
     ofTrueTypeFont futura;
     ofTrueTypeFont optima;
+    ofTrueTypeFont makerOptima;
+    ofTrueTypeFont makerOptimaSmall;
     ofTrueTypeFont pageFont;
     //string array of names
     string HMD_NAMES[8] = {"Vuzix Z100", "Meta Quest 3", "Vuzix M4000", "Xreal Air 2",
@@ -32,6 +34,7 @@ class ofApp : public ofBaseApp{
     int hmdNum = 0;
 
     ofRectangle makerTextBB;
+    ofRectangle makerSmallTextBB;
     ofRectangle nameTextBB;
 
     ofImage HMD_IMAGES[8];
