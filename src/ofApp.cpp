@@ -16,18 +16,22 @@ void ofApp::setup(){
   bgm.load("hmd_bgm_3.wav");
   bgm.setLoop(true);
   bgm.play();
+
+  fftLive.setup();
+  nBandsToGet = 64;
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-
+  ofSoundUpdate();
+  fftLive.update();
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
   ofBackground(0);
   int frameCount = ofGetFrameNum();
-  if (scene == 0) {
+  if (pageNum == 0) {
     float titleY = ofGetWidth()/2-280;
     int yPad = 140;
     ofSetColor(scarlet);
@@ -67,8 +71,17 @@ void ofApp::draw(){
     ofSetColor(t3Col, 0, 0);
     optima.drawString("TSUKAMOTO TERADA LAB.", 0, titleY+2*yPad);
 
-  } else if (scene == 1) {
+    //Visualling the sound
+    ofSetColor(scarlet);
+    float width = (float)(ofGetWidth()) / nBandsToGet;
+    const std::vector<float>& fftData = fftLive.getFftNormData();
+    for (int i = 0; i < nBandsToGet; i++) {
+        float value = fftData[i] * waveMax;
+        ofDrawRectangle(i * width, ofGetHeight(), width, -value);
+    }
 
+  } else if (pageNum != 0)  {
+    hmdNum = pageNum - 1;
     ofSetColor(scarlet);
 
     int trapW = 1000;
@@ -79,13 +92,6 @@ void ofApp::draw(){
     float x3 = x2-trapW/6, y3 = y1+trapH/2-40;
     float x4 = x1+trapW/6, y4 = y3;
 
-    /*
-    float x1 = ofGetWidth()/2-trapW/4, y1 = ofGetHeight()/2-trapH/4-40;
-    float x2 = x1+trapW/2, y2 = y1;
-    float x3 = x2+trapW/6, y3 = y1+trapH/2;
-    float x4 = x1-trapW/6, y4 = y3;
-    */
-
     ofPath trapezoid;
     trapezoid.moveTo(x1, y1);
     trapezoid.lineTo(x2, y2);
@@ -93,10 +99,9 @@ void ofApp::draw(){
     trapezoid.lineTo(x4, y4);
     trapezoid.close();
 
-    // 塗りつぶしの色と輪郭の色を設定
-    trapezoid.setFillColor(ofColor(0)); // 塗りつぶし色
-    trapezoid.setStrokeColor(ofColor(255, 0, 0)); // 輪郭色
-    trapezoid.setStrokeWidth(4); // 輪郭の太さ
+    trapezoid.setFillColor(ofColor(0));
+    trapezoid.setStrokeColor(ofColor(255, 0, 0));
+    trapezoid.setStrokeWidth(4);
     trapezoid.draw();
 
     float makerX = 20;
@@ -110,9 +115,6 @@ void ofApp::draw(){
 
 
     ofSetLineWidth(2);
-    //ofSetColor(0);
-    //ofFill();
-    //ofDrawRectangle(makerX, makerY-makerTextBB.height*2, makerTextBB.width, makerTextBB.height*2);
     ofSetColor(scarlet);
     if (hmdNum == 6 || hmdNum == 7) {
       makerOptimaSmall.drawString(HMD_MAKERS[hmdNum], makerX, makerY-makerSmallTextBB.height-20);
@@ -129,21 +131,30 @@ void ofApp::draw(){
     ofNoFill();
     ofSetLineWidth(4);
     ofSetColor(scarlet);
-    int rectW = 900;
-    int rectH = 560;
-    //ofDrawRectangle(ofGetWidth()/2-rectW/2, ofGetHeight()/2-60-rectH/2, rectW, rectH);
 
     ofSetColor(255);
     int imgW = 640;
     int imgH = 480;
     HMD_IMAGES[hmdNum].draw(ofGetWidth()/2-imgW/2, ofGetHeight()/2-imgH/2-60, imgW, imgH);
 
+
     ofSetColor(scarlet);
     futura.drawString(HMD_NAMES[hmdNum], nameX-nameTextBB.width/2, nameY+64);
     ofSetColor(255);
     futura.drawString(HMD_NAMES[hmdNum], nameX-nameTextBB.width/2+4, nameY+64+4);
 
-    pageFont.drawString(ofToString(hmdNum+1), ofGetWidth()-48, ofGetHeight()-90);
+    //Visualling the sound
+    ofFill();
+    ofSetColor(scarlet);
+    float width = (float)(ofGetWidth()) / nBandsToGet;
+    const std::vector<float>& fftData = fftLive.getFftNormData();
+    for (int i = 0; i < nBandsToGet; i++) {
+        float value = fftData[i] * waveMax;
+        ofDrawRectangle(i * width, ofGetHeight(), width, -value);
+    }
+
+    ofSetColor(255);
+    pageFont.drawString(ofToString(pageNum), ofGetWidth()-48, makerY-64);
 
   }
 }
@@ -152,45 +163,37 @@ void ofApp::draw(){
 void ofApp::keyPressed(int key){
   switch (key) {
     case '0':
-      scene = 0;
+      pageNum = 0;
       break;
     case '1':
-      scene = 1;
-      hmdNum = 0;
+      pageNum = 1;
       break;
     case '2':
-      scene = 1;
-      hmdNum = 1;
+      pageNum = 2;
       break;
     case '3':
-      scene = 1;
-      hmdNum = 2;
+      pageNum = 3;
       break;
     case '4':
-      scene = 1;
-      hmdNum = 3;
+      pageNum = 4;
       break;
     case '5':
-      scene = 1;
-      hmdNum = 4;
+      pageNum = 5;
       break;
     case '6':
-      scene = 1;
-      hmdNum = 5;
+      pageNum = 6;
       break;
     case '7':
-      scene = 1;
-      hmdNum = 6;
+      pageNum = 7;
       break;
     case '8':
-      scene = 1;
-      hmdNum = 7;
+      pageNum = 8;
       break;
     case OF_KEY_LEFT:
-      hmdNum = (hmdNum + 7) % 8;
+      pageNum = (pageNum + 8) % 9;
       break;
     case OF_KEY_RIGHT:
-      hmdNum = (hmdNum + 1) % 8;
+      pageNum = (pageNum + 1) % 9;
       break;
     default:
       break;

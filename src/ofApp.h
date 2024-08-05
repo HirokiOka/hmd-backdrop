@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxFFTLive.h"
 
 class ofApp : public ofBaseApp{
 	public:
@@ -19,6 +20,12 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 
     ofSoundPlayer bgm;
+    ofxFFTLive fftLive;
+
+    vector<float> fftSmoothed;
+    int nBandsToGet;
+    int waveMax = 140;
+
 
     ofTrueTypeFont futura;
     ofTrueTypeFont optima;
@@ -31,7 +38,7 @@ class ofApp : public ofBaseApp{
     string HMD_MAKERS[8] = {"Vuzix", "Meta", "Vuzix", "Xreal",
       "Apple", "Epson", "Microsoft", "Brilliant Labs"};
     int hmdNum = 0;
-    int scene = 0;
+    int pageNum = 0;
 
     ofRectangle makerTextBB;
     ofRectangle makerSmallTextBB;
