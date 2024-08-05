@@ -17,28 +17,26 @@ class ofApp : public ofBaseApp{
 		void mouseEntered(int x, int y);
 		void mouseExited(int x, int y);
 		void windowResized(int w, int h);
-		//void dragEvent(ofDragInfo dragInfo);
-		//void gotMessage(ofMessage msg);
+
 
     ofTrueTypeFont futura;
     ofTrueTypeFont optima;
     ofTrueTypeFont makerOptima;
     ofTrueTypeFont makerOptimaSmall;
     ofTrueTypeFont pageFont;
-    //string array of names
+
     string HMD_NAMES[8] = {"Vuzix Z100", "Meta Quest 3", "Vuzix M4000", "Xreal Air 2",
       "Apple Vision Pro", "MOVERIO BT-40S", "HoloLens 2", "Monocle"};
     string HMD_MAKERS[8] = {"Vuzix", "Meta", "Vuzix", "Xreal",
       "Apple", "Epson", "Microsoft", "Brilliant Labs"};
-    int scene = 0;
     int hmdNum = 0;
+    int scene = 0;
 
     ofRectangle makerTextBB;
     ofRectangle makerSmallTextBB;
     ofRectangle nameTextBB;
 
     ofImage HMD_IMAGES[8];
-    ofImage logo;
 
     ofColor scarlet = ofColor(187, 11, 11);
 

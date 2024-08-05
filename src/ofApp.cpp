@@ -12,8 +12,6 @@ void ofApp::setup(){
   for (int i = 0; i < 8; i++) {
     HMD_IMAGES[i].load("img/" + ofToString(i) + ".jpeg");
   }
-  logo.load("img/logo.png");
-
 }
 
 //--------------------------------------------------------------
