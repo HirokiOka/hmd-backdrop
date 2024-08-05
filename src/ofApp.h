@@ -18,6 +18,7 @@ class ofApp : public ofBaseApp{
 		void mouseExited(int x, int y);
 		void windowResized(int w, int h);
 
+    ofSoundPlayer bgm;
 
     ofTrueTypeFont futura;
     ofTrueTypeFont optima;

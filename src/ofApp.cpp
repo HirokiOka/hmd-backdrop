@@ -12,6 +12,10 @@ void ofApp::setup(){
   for (int i = 0; i < 8; i++) {
     HMD_IMAGES[i].load("img/" + ofToString(i) + ".jpeg");
   }
+
+  bgm.load("hmd_bgm_3.wav");
+  bgm.setLoop(true);
+  bgm.play();
 }
 
 //--------------------------------------------------------------
