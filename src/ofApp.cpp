@@ -13,17 +13,37 @@ void ofApp::setup(){
     HMD_IMAGES[i].load("img/" + ofToString(i) + ".jpeg");
   }
 
-  bgm.load("hmd_bgm_3.wav");
+  //bgm.load("hmd_bgm_3.wav");
+  bgm.load("hmd_bgm_loop.wav");
   bgm.setLoop(true);
   bgm.play();
 
+
+  devices = soundStream.getDeviceList();
+  for (int i = 0; i < devices.size(); i++) {
+    ofLog() << "Device " << i << ": " << devices[i].name;
+  }
+
+  gui.setup();
+  gui.add(brightness.setup("Brightness", 255, 0, 255));
+  gui.add(deviceId.setup("Audio Device", 0, 0, devices.size()-1));
+  gui.add(volume.setup("BGM Volume", 0.5, 0.0, 1.0));
+
+  soundStream.setDeviceID(deviceId);
+  soundStream.setup(this, 0, 2, 44100, 256, 4);
+
+  deviceId.addListener(this, &ofApp::deviceChanged);
+
   fftLive.setup();
+  soundStream.setInput(fftLive);
   nBandsToGet = 64;
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
   ofSoundUpdate();
+  bgm.setVolume(volume);
+  white.setBrightness(brightness);
   fftLive.update();
 }
 
@@ -119,12 +139,12 @@ void ofApp::draw(){
     if (hmdNum == 6 || hmdNum == 7) {
       makerOptimaSmall.drawString(HMD_MAKERS[hmdNum], makerX, makerY-makerSmallTextBB.height-20);
       ofNoFill();
-      ofSetColor(255);
+      ofSetColor(white);
       ofDrawLine(makerX, makerY-makerSmallTextBB.height-10, makerX+makerSmallTextBB.width, makerY-makerSmallTextBB.height-10);
     } else {
       makerOptima.drawString(HMD_MAKERS[hmdNum], makerX+10, makerY-makerTextBB.height-20);
       ofNoFill();
-      ofSetColor(255);
+      ofSetColor(white);
       ofDrawLine(makerX+20, makerY-makerTextBB.height-8, makerX+makerTextBB.width, makerY-makerTextBB.height-8);
     }
 
@@ -132,7 +152,7 @@ void ofApp::draw(){
     ofSetLineWidth(4);
     ofSetColor(scarlet);
 
-    ofSetColor(255);
+    ofSetColor(white);
     int imgW = 640;
     int imgH = 480;
     HMD_IMAGES[hmdNum].draw(ofGetWidth()/2-imgW/2, ofGetHeight()/2-imgH/2-60, imgW, imgH);
@@ -140,7 +160,7 @@ void ofApp::draw(){
 
     ofSetColor(scarlet);
     futura.drawString(HMD_NAMES[hmdNum], nameX-nameTextBB.width/2, nameY+64);
-    ofSetColor(255);
+    ofSetColor(white);
     futura.drawString(HMD_NAMES[hmdNum], nameX-nameTextBB.width/2+4, nameY+64+4);
 
     //Visualling the sound
@@ -153,9 +173,13 @@ void ofApp::draw(){
         ofDrawRectangle(i * width, ofGetHeight(), width, -value);
     }
 
-    ofSetColor(255);
+    ofSetColor(white);
     pageFont.drawString(ofToString(pageNum), ofGetWidth()-48, makerY-64);
 
+  }
+  //DRAW Setting GUI
+  if (debug) {
+    gui.draw();
   }
 }
 
@@ -194,6 +218,9 @@ void ofApp::keyPressed(int key){
       break;
     case OF_KEY_RIGHT:
       pageNum = (pageNum + 1) % 9;
+      break;
+    case 'd':
+      debug = !debug;
       break;
     default:
       break;
@@ -242,3 +269,10 @@ void ofApp::windowResized(int w, int h){
 
 }
 
+void ofApp::deviceChanged(int & newDeviceId) {
+    ofLog() << "Device changed to " << newDeviceId;
+    soundStream.close(); // 現在のサウンドストリームを閉じる
+    soundStream.setDeviceID(newDeviceId); // 新しいデバイスIDを設定
+    soundStream.setup(this, 0, 2, 44100, 256, 4); // サウンドストリームを再設定
+    soundStream.setInput(fftLive); // FFTライブをサウンドストリームにセット
+}

@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxFFTLive.h"
+#include "ofxGui.h"
 
 class ofApp : public ofBaseApp{
 	public:
@@ -18,6 +19,7 @@ class ofApp : public ofBaseApp{
 		void mouseEntered(int x, int y);
 		void mouseExited(int x, int y);
 		void windowResized(int w, int h);
+    void deviceChanged(int & newDeviceId);
 
     ofSoundPlayer bgm;
     ofxFFTLive fftLive;
@@ -45,7 +47,16 @@ class ofApp : public ofBaseApp{
     ofRectangle nameTextBB;
 
     ofImage HMD_IMAGES[8];
+    ofColor white = ofColor(255, 255, 255);
 
     ofColor scarlet = ofColor(187, 11, 11);
+    ofxFloatSlider volume;
+    ofxIntSlider brightness;
+    ofxIntSlider deviceId;
+    ofxPanel gui;
 
+    ofSoundStream soundStream;
+    vector<ofSoundDevice> devices;
+
+    bool debug = false;
 };

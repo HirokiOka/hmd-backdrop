@@ -2,3 +2,9 @@
 Makefile
 obj/
 bin/*
+addons.make
+config.make
+of.entitlements
+openFrameworks-Info.plist
+Project.xcconfig
+
