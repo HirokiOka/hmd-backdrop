@@ -99,6 +99,34 @@ void ofApp::draw(){
         float value = fftData[i] * waveMax;
         ofDrawRectangle(i * width, ofGetHeight(), width, -value);
     }
+  } else if (pageNum == 10) {
+    string[8] models = {
+      "Taichi Kyogoku",
+      "Yuki Morisaki",
+      "Marii Mochizuki",
+      "Takuma Shibata",
+      "Salman Suwandi",
+      "Kanata Utsunomiya",
+      "Genki Mizutani",
+      "Haruki Nagao"
+    };
+    string[4] staff = {
+      "Hiroki Oka",
+      "Natsumi Matsui",
+      "Taichi Kyogoku",
+      "Yusuke Miyajima"
+    };
+
+    //show credits
+    ofBackground(0);
+    ofSetColor(scarlet);
+    for (int i = 0; i < models.size(); i++) {
+      futura.drawString(models[i], 0, 100+100*i);
+    }
+    for (int i = 0; i < staff.size(); i++) {
+      futura.drawString(staff[i], 0, models.size*100+100+100*i);
+    }
+
 
   } else if (pageNum != 0)  {
     hmdNum = pageNum - 1;
