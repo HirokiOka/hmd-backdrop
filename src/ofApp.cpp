@@ -5,6 +5,7 @@ void ofApp::setup(){
   ofBackground(0);
   ofSetColor(255, 80, 10);
   futura.load("Futura.ttc", 84);
+  futuraSmall.load("Futura.ttc", 32);
   optima.load("Optima.ttc", 84);
   makerOptima.load("Optima.ttc", 64);
   makerOptimaSmall.load("Optima.ttc", 48);
@@ -99,8 +100,8 @@ void ofApp::draw(){
         float value = fftData[i] * waveMax;
         ofDrawRectangle(i * width, ofGetHeight(), width, -value);
     }
-  } else if (pageNum == 10) {
-    string[8] models = {
+  } else if (pageNum == 9) {
+    string models[8] = {
       "Taichi Kyogoku",
       "Yuki Morisaki",
       "Marii Mochizuki",
@@ -110,7 +111,7 @@ void ofApp::draw(){
       "Genki Mizutani",
       "Haruki Nagao"
     };
-    string[4] staff = {
+    string staff[4] = {
       "Hiroki Oka",
       "Natsumi Matsui",
       "Taichi Kyogoku",
@@ -119,12 +120,35 @@ void ofApp::draw(){
 
     //show credits
     ofBackground(0);
+    int offsetX = 180;
+    int offsetY = 160;
+    int pX = 580;
+    int pY = 90;
+    //draw center line
+    //ofDrawLine(ofGetWidth()/2, 0, ofGetWidth()/2, ofGetHeight());
+    ofSetColor(white);
+    makerOptima.drawString("Staff", ofGetWidth()/2 - 110, 90);
     ofSetColor(scarlet);
-    for (int i = 0; i < models.size(); i++) {
-      futura.drawString(models[i], 0, 100+100*i);
+    //draw underline
+    ofSetLineWidth(2);
+    ofDrawLine(ofGetWidth()/2 - 110, 100, ofGetWidth()/2 + 60, 100);
+    ofSetColor(scarlet);
+    for (int i = 0; i < 4; i++) {
+      int row = i / 2;
+      int column = i % 2;
+      makerOptimaSmall.drawString(staff[i], offsetX+row*pX, offsetY+10+pY*column);
     }
-    for (int i = 0; i < staff.size(); i++) {
-      futura.drawString(staff[i], 0, models.size*100+100+100*i);
+
+    ofSetColor(white);
+    makerOptima.drawString("Model", ofGetWidth()/2 - 120, offsetY+20+2*pY);
+    //draw underline
+    ofSetColor(scarlet);
+    ofDrawLine(ofGetWidth()/2 - 120, offsetY+30+2*pY, ofGetWidth()/2 + 110, offsetY+30+2*pY);
+    ofSetColor(scarlet);
+    for (int i = 0; i < 8; i++) {
+      int row = i / 4;
+      int column = i % 4;
+      makerOptimaSmall.drawString(models[i], offsetX+row*pX, 2*pY+offsetY+100+pY*column);
     }
 
 
@@ -241,11 +265,16 @@ void ofApp::keyPressed(int key){
     case '8':
       pageNum = 8;
       break;
+    case '9':
+      pageNum = 9;
+      break;
     case OF_KEY_LEFT:
-      pageNum = (pageNum + 8) % 9;
+      //pageNum = (pageNum + 8) % 9;
+      pageNum = (pageNum + 9) % 10;
       break;
     case OF_KEY_RIGHT:
-      pageNum = (pageNum + 1) % 9;
+      //pageNum = (pageNum + 1) % 9;
+      pageNum = (pageNum + 1) % 10;
       break;
     case 'd':
       debug = !debug;
