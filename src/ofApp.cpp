@@ -140,10 +140,10 @@ void ofApp::draw(){
     }
 
     ofSetColor(white);
-    makerOptima.drawString("Model", ofGetWidth()/2 - 120, offsetY+20+2*pY);
+    makerOptima.drawString("Models", ofGetWidth()/2 - 120, offsetY+20+2*pY);
     //draw underline
     ofSetColor(scarlet);
-    ofDrawLine(ofGetWidth()/2 - 120, offsetY+30+2*pY, ofGetWidth()/2 + 110, offsetY+30+2*pY);
+    ofDrawLine(ofGetWidth()/2 - 120, offsetY+30+2*pY, ofGetWidth()/2 + 140, offsetY+30+2*pY);
     ofSetColor(scarlet);
     for (int i = 0; i < 8; i++) {
       int row = i / 4;
