@@ -5,6 +5,7 @@ void ofApp::setup(){
   ofBackground(0);
   ofSetColor(255, 80, 10);
   futura.load("Futura.ttc", 84);
+  futuraMid.load("Futura.ttc", 52);
   futuraSmall.load("Futura.ttc", 32);
   optima.load("Optima.ttc", 84);
   makerOptima.load("Optima.ttc", 64);
@@ -126,29 +127,41 @@ void ofApp::draw(){
     int pY = 90;
     //draw center line
     //ofDrawLine(ofGetWidth()/2, 0, ofGetWidth()/2, ofGetHeight());
+
     ofSetColor(white);
-    makerOptima.drawString("Staff", ofGetWidth()/2 - 110, 90);
+    makerOptimaSmall.drawString("Staff", ofGetWidth()/2 - 110, 90);
+    //futuraMid.drawString("Staff", ofGetWidth()/2 - 110+4, 90+4);
+    //ofSetColor(white);
+    //futuraMid.drawString("Staff", ofGetWidth()/2 - 110, 90);
     ofSetColor(scarlet);
     //draw underline
     ofSetLineWidth(2);
-    ofDrawLine(ofGetWidth()/2 - 110, 100, ofGetWidth()/2 + 60, 100);
-    ofSetColor(scarlet);
+    ofDrawLine(ofGetWidth()/2 - 110, 100, ofGetWidth()/2 + 10, 100);
+    ofSetColor(white);
     for (int i = 0; i < 4; i++) {
       int row = i / 2;
       int column = i % 2;
-      makerOptimaSmall.drawString(staff[i], offsetX+row*pX, offsetY+10+pY*column);
+      //makerOptimaSmall.drawString(staff[i], offsetX+row*pX, offsetY+10+pY*column);
+      futuraSmall.drawString(staff[i], offsetX+row*pX, offsetY+10+pY*column);
     }
 
     ofSetColor(white);
-    makerOptima.drawString("Models", ofGetWidth()/2 - 120, offsetY+20+2*pY);
+    makerOptimaSmall.drawString("Models", ofGetWidth()/2 - 120, offsetY+20+2*pY);
+    /*
+    futuraMid.drawString("Models", ofGetWidth()/2 - 120+4, offsetY+20+2*pY+4);
+    ofSetColor(white);
+    futuraMid.drawString("Models", ofGetWidth()/2 - 120, offsetY+20+2*pY);
+    ofSetColor(scarlet);
+    */
+    ofSetColor(scarlet);
     //draw underline
-    ofSetColor(scarlet);
-    ofDrawLine(ofGetWidth()/2 - 120, offsetY+30+2*pY, ofGetWidth()/2 + 140, offsetY+30+2*pY);
-    ofSetColor(scarlet);
+    ofDrawLine(ofGetWidth()/2 - 120, offsetY+30+2*pY, ofGetWidth()/2 + 90, offsetY+30+2*pY);
+    ofSetColor(white);
     for (int i = 0; i < 8; i++) {
       int row = i / 4;
       int column = i % 4;
-      makerOptimaSmall.drawString(models[i], offsetX+row*pX, 2*pY+offsetY+100+pY*column);
+      //makerOptimaSmall.drawString(models[i], offsetX+row*pX, 2*pY+offsetY+100+pY*column);
+      futuraSmall.drawString(models[i], offsetX+row*pX, 2*pY+offsetY+100+pY*column);
     }
 
 

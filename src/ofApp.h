@@ -30,6 +30,7 @@ class ofApp : public ofBaseApp{
 
 
     ofTrueTypeFont futura;
+    ofTrueTypeFont futuraMid;
     ofTrueTypeFont futuraSmall;
     ofTrueTypeFont optima;
     ofTrueTypeFont makerOptima;
