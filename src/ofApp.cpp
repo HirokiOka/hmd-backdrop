@@ -57,7 +57,7 @@ void ofApp::draw(){
     float titleY = ofGetWidth()/2-280;
     int yPad = 140;
     ofSetColor(scarlet);
-    ofSetLineWidth(3);
+    ofSetLineWidth(8);
 
     ofNoFill();
     ofDrawTriangle(
@@ -121,22 +121,22 @@ void ofApp::draw(){
 
     //show credits
     ofBackground(0);
-    int offsetX = 180;
+    int offsetX = 240;
     int offsetY = 160;
-    int pX = 580;
+    int pX = 640;
     int pY = 90;
     //draw center line
     //ofDrawLine(ofGetWidth()/2, 0, ofGetWidth()/2, ofGetHeight());
 
     ofSetColor(white);
-    makerOptimaSmall.drawString("Staff", ofGetWidth()/2 - 110, 90);
+    makerOptimaSmall.drawString("Staff", ofGetWidth()/2 - 60, 90);
     //futuraMid.drawString("Staff", ofGetWidth()/2 - 110+4, 90+4);
     //ofSetColor(white);
     //futuraMid.drawString("Staff", ofGetWidth()/2 - 110, 90);
     ofSetColor(scarlet);
     //draw underline
     ofSetLineWidth(2);
-    ofDrawLine(ofGetWidth()/2 - 110, 100, ofGetWidth()/2 + 10, 100);
+    ofDrawLine(ofGetWidth()/2 - 50, 100, ofGetWidth()/2 + 60, 100);
     ofSetColor(white);
     for (int i = 0; i < 4; i++) {
       int row = i / 2;
@@ -177,17 +177,37 @@ void ofApp::draw(){
     float x3 = x2-trapW/6, y3 = y1+trapH/2-40;
     float x4 = x1+trapW/6, y4 = y3;
 
+    ofPath backTrapezoid;
+    backTrapezoid.moveTo(x1-70, y1-30);
+    backTrapezoid.lineTo(x2+70, y2-30);
+    backTrapezoid.lineTo(x3, y3);
+    backTrapezoid.lineTo(x4, y4);
+    backTrapezoid.close();
+
     ofPath trapezoid;
     trapezoid.moveTo(x1, y1);
     trapezoid.lineTo(x2, y2);
-    trapezoid.lineTo(x3, y3);
-    trapezoid.lineTo(x4, y4);
+    trapezoid.lineTo(x3, y3-10);
+    trapezoid.lineTo(x4, y4-10);
     trapezoid.close();
 
+    backTrapezoid.setFillColor(ofColor(scarlet));
+    backTrapezoid.setStrokeColor(ofColor(scarlet));
+    backTrapezoid.setStrokeWidth(4);
+    backTrapezoid.draw();
+
     trapezoid.setFillColor(ofColor(0));
-    trapezoid.setStrokeColor(ofColor(255, 0, 0));
+    trapezoid.setStrokeColor(ofColor(scarlet));
     trapezoid.setStrokeWidth(4);
     trapezoid.draw();
+
+
+    /*
+    ofSetLineWidth(6); 
+    ofDrawTriangle(x1-20, y1, x1, y1, x4, y4);
+    ofDrawTriangle(x2+20, y1, x2, y2, x3, y3);
+    */
+
 
     float makerX = 20;
     float makerY = ofGetHeight()-140;
