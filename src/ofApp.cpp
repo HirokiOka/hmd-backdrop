@@ -16,7 +16,7 @@ void ofApp::setup(){
   }
 
   //bgm.load("hmd_bgm_3.wav");
-  bgm.load("hmd_bgm_loop.wav");
+  bgm.load("hmd_bgm_v5_re.wav");
   bgm.setLoop(true);
   bgm.play();
 
