@@ -103,10 +103,10 @@ void ofApp::draw(){
     }
   } else if (pageNum == 9) {
     string models[8] = {
-      "Taichi Kyogoku",
-      "Yuki Morisaki",
-      "Marii Mochizuki",
       "Takuma Shibata",
+      "Yuki Morisaki",
+      "Taichi Kyogoku",
+      "Marii Mochizuki",
       "Salman Suwandi",
       "Kanata Utsunomiya",
       "Genki Mizutani",
