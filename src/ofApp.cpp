@@ -11,14 +11,14 @@ void ofApp::setup(){
   makerOptima.load("Optima.ttc", 64);
   makerOptimaSmall.load("Optima.ttc", 48);
   pageFont.load("Optima.ttc", 24);
+
   for (int i = 0; i < 8; i++) {
     HMD_IMAGES[i].load("img/" + ofToString(i) + ".jpeg");
   }
 
-  //bgm.load("hmd_bgm_3.wav");
   bgm.load("hmd_bgm_v5_re.wav");
   bgm.setLoop(true);
-  bgm.play();
+  //bgm.play();
 
 
   devices = soundStream.getDeviceList();
@@ -53,12 +53,15 @@ void ofApp::update(){
 void ofApp::draw(){
   ofBackground(0);
   int frameCount = ofGetFrameNum();
+
   if (pageNum == 0) {
     float titleY = ofGetWidth()/2-280;
     int yPad = 140;
+    int iconLineWidth = 8;
     ofSetColor(scarlet);
-    ofSetLineWidth(8);
+    ofSetLineWidth(iconLineWidth);
 
+    //Draw HMD ICON
     ofNoFill();
     ofDrawTriangle(
         ofGetWidth()/4, 40,
@@ -102,68 +105,7 @@ void ofApp::draw(){
         ofDrawRectangle(i * width, ofGetHeight(), width, -value);
     }
   } else if (pageNum == 9) {
-    string models[8] = {
-      "Takuma Shibata",
-      "Yuki Morisaki",
-      "Taichi Kyogoku",
-      "Marii Mochizuki",
-      "Salman Suwandi",
-      "Kanata Utsunomiya",
-      "Genki Mizutani",
-      "Haruki Nagao"
-    };
-    string staff[4] = {
-      "Hiroki Oka",
-      "Natsumi Matsui",
-      "Taichi Kyogoku",
-      "Yusuke Miyajima"
-    };
-
-    //show credits
-    ofBackground(0);
-    int offsetX = 240;
-    int offsetY = 160;
-    int pX = 640;
-    int pY = 90;
-    //draw center line
-    //ofDrawLine(ofGetWidth()/2, 0, ofGetWidth()/2, ofGetHeight());
-
-    ofSetColor(white);
-    makerOptimaSmall.drawString("Staff", ofGetWidth()/2 - 60, 90);
-    //futuraMid.drawString("Staff", ofGetWidth()/2 - 110+4, 90+4);
-    //ofSetColor(white);
-    //futuraMid.drawString("Staff", ofGetWidth()/2 - 110, 90);
-    ofSetColor(scarlet);
-    //draw underline
-    ofSetLineWidth(2);
-    ofDrawLine(ofGetWidth()/2 - 50, 100, ofGetWidth()/2 + 60, 100);
-    ofSetColor(white);
-    for (int i = 0; i < 4; i++) {
-      int row = i / 2;
-      int column = i % 2;
-      //makerOptimaSmall.drawString(staff[i], offsetX+row*pX, offsetY+10+pY*column);
-      futuraSmall.drawString(staff[i], offsetX+row*pX, offsetY+10+pY*column);
-    }
-
-    ofSetColor(white);
-    makerOptimaSmall.drawString("Models", ofGetWidth()/2 - 120, offsetY+20+2*pY);
-    /*
-    futuraMid.drawString("Models", ofGetWidth()/2 - 120+4, offsetY+20+2*pY+4);
-    ofSetColor(white);
-    futuraMid.drawString("Models", ofGetWidth()/2 - 120, offsetY+20+2*pY);
-    ofSetColor(scarlet);
-    */
-    ofSetColor(scarlet);
-    //draw underline
-    ofDrawLine(ofGetWidth()/2 - 120, offsetY+30+2*pY, ofGetWidth()/2 + 90, offsetY+30+2*pY);
-    ofSetColor(white);
-    for (int i = 0; i < 8; i++) {
-      int row = i / 4;
-      int column = i % 4;
-      //makerOptimaSmall.drawString(models[i], offsetX+row*pX, 2*pY+offsetY+100+pY*column);
-      futuraSmall.drawString(models[i], offsetX+row*pX, 2*pY+offsetY+100+pY*column);
-    }
-
+    showCredits();
 
   } else if (pageNum != 0)  {
     hmdNum = pageNum - 1;
@@ -202,13 +144,6 @@ void ofApp::draw(){
     trapezoid.draw();
 
 
-    /*
-    ofSetLineWidth(6); 
-    ofDrawTriangle(x1-20, y1, x1, y1, x4, y4);
-    ofDrawTriangle(x2+20, y1, x2, y2, x3, y3);
-    */
-
-
     float makerX = 20;
     float makerY = ofGetHeight()-140;
     makerTextBB = makerOptima.getStringBoundingBox(HMD_MAKERS[hmdNum], makerX, makerY);
@@ -221,6 +156,7 @@ void ofApp::draw(){
 
     ofSetLineWidth(2);
     ofSetColor(scarlet);
+    //When the maker name is too long, use smaller font
     if (hmdNum == 6 || hmdNum == 7) {
       makerOptimaSmall.drawString(HMD_MAKERS[hmdNum], makerX, makerY-makerSmallTextBB.height-20);
       ofNoFill();
@@ -242,7 +178,6 @@ void ofApp::draw(){
     int imgH = 480;
     HMD_IMAGES[hmdNum].draw(ofGetWidth()/2-imgW/2, ofGetHeight()/2-imgH/2-60, imgW, imgH);
 
-
     ofSetColor(scarlet);
     futura.drawString(HMD_NAMES[hmdNum], nameX-nameTextBB.width/2, nameY+64);
     ofSetColor(white);
@@ -261,11 +196,114 @@ void ofApp::draw(){
     ofSetColor(white);
     pageFont.drawString(ofToString(pageNum), ofGetWidth()-48, makerY-64);
 
+
+
   }
   //DRAW Setting GUI
   if (debug) {
     gui.draw();
   }
+}
+
+//--------------------------------------------------------------
+void ofApp::showCredits(){
+  string models[8] = {
+    "Takuma Shibata",
+    "Yuki Morisaki",
+    "Taichi Kyogoku",
+    "Marii Mochizuki",
+    "Salman Suwandi",
+    "Kanata Utsunomiya",
+    "Genki Mizutani",
+    "Haruki Nagao"
+  };
+
+  string staff[4] = {
+    "Hiroki Oka",
+    "Natsumi Matsui",
+    "Taichi Kyogoku",
+    "Yusuke Miyajima"
+  };
+
+  ofBackground(0);
+  //Draw center line
+  /*
+  ofSetColor(white);
+  ofDrawLine(ofGetWidth()/2, 0, ofGetWidth()/2, ofGetHeight());
+  */
+
+  /*
+  //Draw quarter line
+  ofDrawLine(ofGetWidth()/4, 0, ofGetWidth()/4, ofGetHeight());
+  ofDrawLine(ofGetWidth()*3/4, 0, ofGetWidth()*3/4, ofGetHeight());
+  */
+
+  int offsetY = ofGetHeight()/5;
+  int pX = ofGetWidth()/2;
+  int pY = 90;
+  int titlePaddingY = 10;
+  int underlinePaddingY = 10;
+  int underlineExt = 4;
+  ofRectangle staffBB = makerOptimaSmall.getStringBoundingBox("Staff", 0, 0);
+  int subTitleX = ofGetWidth()/2 - staffBB.width/2;
+
+  ofSetColor(white);
+  makerOptimaSmall.drawString("Staff", subTitleX, pY);
+
+  //Draw underline
+  ofSetColor(scarlet);
+  ofSetLineWidth(4);
+  ofDrawLine(subTitleX-underlineExt, pY+underlinePaddingY, subTitleX + staffBB.width + underlineExt, pY+underlinePaddingY);
+
+  //Draw staff names
+
+  ofSetColor(white);
+  ofNoFill();
+
+  for (int i = 0; i < 4; i++) {
+    int row = i / 2;
+    int column = i % 2;
+    int textX = ofGetWidth()/4 + row * pX;
+    int textY = offsetY + titlePaddingY + pY * column;
+    ofRectangle bb = futuraSmall.getStringBoundingBox(staff[i], textX, textY);
+
+    ofSetColor(white);
+    futuraSmall.drawString(staff[i], bb.x- bb.width/2, textY);
+  }
+
+  //SubTitle2 
+  ofRectangle modelsBB = makerOptimaSmall.getStringBoundingBox("Models", 0, 0);
+  int textY = offsetY + 2*pY + 20 ;
+  int subTitleX2 = ofGetWidth()/2 - modelsBB.width/2;
+  ofSetColor(white);
+  makerOptimaSmall.drawString("Models", subTitleX2, textY);
+
+  //Draw underline
+  ofSetColor(scarlet);
+  ofDrawLine(subTitleX2 -underlineExt, textY+underlinePaddingY, subTitleX2 + modelsBB.width+underlineExt, textY+underlinePaddingY);
+
+  //Draw model names
+  ofSetColor(white);
+  int yDist = pY*2 + pY;
+  for (int i = 0; i < 8; i++) {
+    int row = i / 4;
+    int column = i % 4;
+    int textX = ofGetWidth()/4 + row * pX;
+    int textY = offsetY + titlePaddingY + yDist + pY * column;
+    ofRectangle bb = futuraSmall.getStringBoundingBox(models[i], textX, textY);
+
+    ofSetColor(white);
+    futuraSmall.drawString(models[i], bb.x - bb.width/2, textY);
+
+  }
+}
+
+void ofApp::deviceChanged(int & newDeviceId) {
+    ofLog() << "Device changed to " << newDeviceId;
+    soundStream.close(); // 現在のサウンドストリームを閉じる
+    soundStream.setDeviceID(newDeviceId); // 新しいデバイスIDを設定
+    soundStream.setup(this, 0, 2, 44100, 256, 4); // サウンドストリームを再設定
+    soundStream.setInput(fftLive); // FFTライブをサウンドストリームにセット
 }
 
 //--------------------------------------------------------------
@@ -324,45 +362,3 @@ void ofApp::keyReleased(int key){
 
 }
 
-//--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseEntered(int x, int y){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseExited(int x, int y){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
-
-}
-
-void ofApp::deviceChanged(int & newDeviceId) {
-    ofLog() << "Device changed to " << newDeviceId;
-    soundStream.close(); // 現在のサウンドストリームを閉じる
-    soundStream.setDeviceID(newDeviceId); // 新しいデバイスIDを設定
-    soundStream.setup(this, 0, 2, 44100, 256, 4); // サウンドストリームを再設定
-    soundStream.setInput(fftLive); // FFTライブをサウンドストリームにセット
-}
