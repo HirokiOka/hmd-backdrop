@@ -58,27 +58,24 @@ void ofApp::draw(){
     float titleY = ofGetWidth()/2-280;
     int yPad = 140;
     int iconLineWidth = 8;
-    ofSetColor(scarlet);
-    ofSetLineWidth(iconLineWidth);
 
     //Draw HMD ICON
-    ofNoFill();
-    ofDrawTriangle(
-        ofGetWidth()/4, 40,
-        ofGetWidth()*4/5, 40,
-        ofGetWidth(), ofGetHeight()*2/3);
+    ofPoint p1 = ofPoint(ofGetWidth()/4, ofGetHeight() / 24);
+    ofPoint p2 = ofPoint(ofGetWidth()*4/5, ofGetHeight() / 24);
+    ofPoint p3 = ofPoint(ofGetWidth(), ofGetHeight()*2/3);
 
+    ofPoint p1_2 = p1 + (p2 - p1) * (1.0 / 2.0);
+    ofPoint p2_3 = p2 + (p3 - p2) * (5.0 / 12.0);
+    ofPoint p1_3_1 = p1 + (p3 - p1) * (1.0 / 3.0);
+    ofPoint p1_3_2 = p1 + (p3 - p1) * (2.0 / 3.0);
+
+    ofNoFill();
+    ofSetColor(scarlet);
+    ofDrawTriangle(p1, p2, p3);
     ofFill();
-    ofSetLineWidth(8);
-    ofDrawTriangle(
-        ofGetWidth()*2/4, 40,
-        ofGetWidth()*4/5, 40,
-        ofGetWidth()*2/4+20, ofGetHeight()*1/3-62);
-    //ofSetColor(255);
-    ofDrawTriangle(
-        ofGetWidth()*4/5, 40,
-        ofGetWidth()*4/5+20, ofGetHeight()/2+12,
-        ofGetWidth()*4/5+134, ofGetHeight()*1/3);
+    ofSetLineWidth(iconLineWidth);
+    ofDrawTriangle(p1_2, p2, p1_3_1);
+    ofDrawTriangle(p2, p2_3, p1_3_2);
 
     //TITLE TEXTS
     float t1Red = abs(sin(frameCount * 0.004 + 20)) * 200;
