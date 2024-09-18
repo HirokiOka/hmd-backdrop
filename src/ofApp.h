@@ -33,10 +33,33 @@ class ofApp : public ofBaseApp{
     ofTrueTypeFont makerOptimaSmall;
     ofTrueTypeFont pageFont;
 
-    string HMD_NAMES[8] = {"Vuzix Z100", "Meta Quest 3", "Vuzix M4000", "Xreal Air 2",
-      "Apple Vision Pro", "MOVERIO BT-40S", "HoloLens 2", "Monocle"};
-    string HMD_MAKERS[8] = {"Vuzix", "Meta", "Vuzix", "Xreal",
-      "Apple", "Epson", "Microsoft", "Brilliant Labs"};
+    /*
+    //string HMD_NAMES[8] = {"Vuzix Z100", "Meta Quest 3", "Vuzix M4000", "Xreal Air 2",
+      //"Apple Vision Pro", "MOVERIO BT-40S", "HoloLens 2", "Monocle"};
+    //string HMD_MAKERS[8] = {"Vuzix", "Meta", "Vuzix", "Xreal",
+      //"Apple", "Epson", "Microsoft", "Brilliant Labs"};
+    */
+    string HMD_NAMES[8] = {
+      "Xreal Air 2",
+      "Meta Quest 3",
+      "Vuzix Z100",
+      "Vuzix M4000",
+      "Apple Vision Pro",
+      "MOVERIO BT-40S",
+      "HoloLens 2",
+      //"Monocle"
+      "Frame"
+    };
+    string HMD_MAKERS[8] = {
+      "Xreal",
+      "Meta",
+      "Vuzix",
+      "Vuzix",
+      "Apple",
+      "Epson",
+      "Microsoft",
+      "Brilliant Labs"
+    };
     int hmdNum = 0;
     int pageNum = 0;
 

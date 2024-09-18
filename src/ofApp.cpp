@@ -18,7 +18,7 @@ void ofApp::setup(){
 
   bgm.load("hmd_bgm_v5_re.wav");
   bgm.setLoop(true);
-  //bgm.play();
+  bgm.play();
 
 
   devices = soundStream.getDeviceList();
@@ -55,7 +55,6 @@ void ofApp::draw(){
   int frameCount = ofGetFrameNum();
 
   if (pageNum == 0) {
-    float titleY = ofGetWidth()/2-280;
     int yPad = 140;
     int iconLineWidth = 8;
 
@@ -78,6 +77,8 @@ void ofApp::draw(){
     ofDrawTriangle(p2, p2_3, p1_3_2);
 
     //TITLE TEXTS
+    float titleY = ofGetHeight()/2;
+
     float t1Red = abs(sin(frameCount * 0.004 + 20)) * 200;
     float t1Col = ofMap(t1Red, 0, 200, 1, 255);
     ofSetColor(t1Col, 0, 0);
@@ -93,14 +94,7 @@ void ofApp::draw(){
     ofSetColor(t3Col, 0, 0);
     optima.drawString("TSUKAMOTO TERADA LAB.", 0, titleY+2*yPad);
 
-    //Visualling the sound
-    ofSetColor(scarlet);
-    float width = (float)(ofGetWidth()) / nBandsToGet;
-    const std::vector<float>& fftData = fftLive.getFftNormData();
-    for (int i = 0; i < nBandsToGet; i++) {
-        float value = fftData[i] * waveMax;
-        ofDrawRectangle(i * width, ofGetHeight(), width, -value);
-    }
+
   } else if (pageNum == 9) {
     showCredits();
 
@@ -180,16 +174,6 @@ void ofApp::draw(){
     ofSetColor(white);
     futura.drawString(HMD_NAMES[hmdNum], nameX-nameTextBB.width/2+4, nameY+64+4);
 
-    //Visualling the sound
-    ofFill();
-    ofSetColor(scarlet);
-    float width = (float)(ofGetWidth()) / nBandsToGet;
-    const std::vector<float>& fftData = fftLive.getFftNormData();
-    for (int i = 0; i < nBandsToGet; i++) {
-        float value = fftData[i] * waveMax;
-        ofDrawRectangle(i * width, ofGetHeight(), width, -value);
-    }
-
     ofSetColor(white);
     pageFont.drawString(ofToString(pageNum), ofGetWidth()-48, makerY-64);
 
@@ -199,6 +183,16 @@ void ofApp::draw(){
   //DRAW Setting GUI
   if (debug) {
     gui.draw();
+  }
+
+  //Visualize FFT
+  ofSetColor(scarlet);
+  ofFill();
+  float width = (float)(ofGetWidth()) / nBandsToGet;
+  const std::vector<float>& fftData = fftLive.getFftNormData();
+  for (int i = 0; i < nBandsToGet; i++) {
+    float value = fftData[i] * waveMax;
+    ofDrawRectangle(i * width + 10, ofGetHeight(), width * 9/10, -value-10);
   }
 }
 
@@ -297,10 +291,10 @@ void ofApp::showCredits(){
 
 void ofApp::deviceChanged(int & newDeviceId) {
     ofLog() << "Device changed to " << newDeviceId;
-    soundStream.close(); // 現在のサウンドストリームを閉じる
-    soundStream.setDeviceID(newDeviceId); // 新しいデバイスIDを設定
-    soundStream.setup(this, 0, 2, 44100, 256, 4); // サウンドストリームを再設定
-    soundStream.setInput(fftLive); // FFTライブをサウンドストリームにセット
+    soundStream.close();
+    soundStream.setDeviceID(newDeviceId);
+    soundStream.setup(this, 0, 2, 44100, 256, 4);
+    soundStream.setInput(fftLive);
 }
 
 //--------------------------------------------------------------
