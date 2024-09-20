@@ -18,7 +18,10 @@ void ofApp::setup(){
 
   bgm.load("hmd_bgm_v5_re.wav");
   bgm.setLoop(true);
-  bgm.play();
+  //bgm.play();
+  isPlaying = false;
+
+  ofHideCursor();
 
 
   devices = soundStream.getDeviceList();
@@ -340,6 +343,15 @@ void ofApp::keyPressed(int key){
       break;
     case 'd':
       debug = !debug;
+      break;
+    case ' ':
+      if (isPlaying) {
+        bgm.stop();
+        isPlaying = false;
+      } else {
+        bgm.play();
+        isPlaying = true;
+      }
       break;
     default:
       break;

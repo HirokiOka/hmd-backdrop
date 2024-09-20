@@ -23,6 +23,7 @@ class ofApp : public ofBaseApp{
     vector<float> fftSmoothed;
     int nBandsToGet;
     int waveMax = 140;
+    bool isPlaying = false;
 
 
     ofTrueTypeFont futura;
