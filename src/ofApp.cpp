@@ -139,28 +139,31 @@ void ofApp::draw(){
 
 
     float makerX = 20;
-    float makerY = ofGetHeight()-140;
-    makerTextBB = makerOptima.getStringBoundingBox(HMD_MAKERS[hmdNum], makerX, makerY);
-    makerSmallTextBB = makerOptimaSmall.getStringBoundingBox(HMD_MAKERS[hmdNum], makerX, makerY);
+    //float makerY = ofGetHeight()-140;
+    float makerY = ofGetHeight() * 5/6;
+
+    makerTextBB = makerOptima.getStringBoundingBox(HMD_MAKERS[hmdNum], 0, 0);
+    makerSmallTextBB = makerOptimaSmall.getStringBoundingBox(HMD_MAKERS[hmdNum], 0, 0);
 
     float nameX = ofGetWidth()/2;
     float nameY = 48;
     nameTextBB = futura.getStringBoundingBox(HMD_NAMES[hmdNum], nameX, nameY);
 
 
-    ofSetLineWidth(2);
+    int ulPad = 8;
     ofSetColor(scarlet);
     //When the maker name is too long, use smaller font
+    ofSetLineWidth(4);
     if (hmdNum == 6 || hmdNum == 7) {
-      makerOptimaSmall.drawString(HMD_MAKERS[hmdNum], makerX, makerY-makerSmallTextBB.height-20);
+      makerOptimaSmall.drawString(HMD_MAKERS[hmdNum], makerX, makerY - makerSmallTextBB.height);
       ofNoFill();
       ofSetColor(white);
-      ofDrawLine(makerX, makerY-makerSmallTextBB.height-10, makerX+makerSmallTextBB.width, makerY-makerSmallTextBB.height-10);
+      ofDrawLine(makerX, makerY-makerSmallTextBB.height+ulPad, makerX + makerSmallTextBB.width, makerY-makerSmallTextBB.height + ulPad);
     } else {
-      makerOptima.drawString(HMD_MAKERS[hmdNum], makerX+10, makerY-makerTextBB.height-20);
+      makerOptima.drawString(HMD_MAKERS[hmdNum], makerX, makerY - makerTextBB.height);
       ofNoFill();
       ofSetColor(white);
-      ofDrawLine(makerX+20, makerY-makerTextBB.height-8, makerX+makerTextBB.width, makerY-makerTextBB.height-8);
+      ofDrawLine(makerX, makerY-makerTextBB.height+ulPad, makerX + makerTextBB.width, makerY-makerTextBB.height+ulPad);
     }
 
     ofNoFill();
