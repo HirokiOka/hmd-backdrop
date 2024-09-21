@@ -42,6 +42,7 @@ void ofApp::setup(){
   fftLive.setup();
   soundStream.setInput(fftLive);
   nBandsToGet = 64;
+
 }
 
 //--------------------------------------------------------------
@@ -96,7 +97,6 @@ void ofApp::draw(){
     float t3Col = ofMap(t3Red, 0, 200, 1, 255);
     ofSetColor(t3Col, 0, 0);
     optima.drawString("TSUKAMOTO TERADA LAB.", 0, titleY+2*yPad);
-
 
   } else if (pageNum == 9) {
     showCredits();
