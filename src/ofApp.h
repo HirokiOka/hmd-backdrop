@@ -42,24 +42,23 @@ class ofApp : public ofBaseApp{
       //"Apple", "Epson", "Microsoft", "Brilliant Labs"};
     */
     string HMD_NAMES[8] = {
-      "Xreal Air 2",
-      "Meta Quest 3",
       "Vuzix M4000",
-      "Vuzix Z100",
-      "Apple Vision Pro",
       "MOVERIO BT-40S",
+      "Xreal Air 2",
       "HoloLens 2",
-      //"Monocle"
+      "Apple Vision Pro",
+      "Meta Quest 3",
+      "Vuzix Z100",
       "Frame"
     };
     string HMD_MAKERS[8] = {
+      "Vuzix",
+      "Epson",
       "Xreal",
+      "Microsoft",
+      "Apple",
       "Meta",
       "Vuzix",
-      "Vuzix",
-      "Apple",
-      "Epson",
-      "Microsoft",
       "Brilliant Labs"
     };
     int hmdNum = 0;
