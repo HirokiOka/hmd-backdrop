@@ -18,6 +18,7 @@ class ofApp : public ofBaseApp{
 
 
     ofSoundPlayer bgm;
+    ofSoundPlayer testSound;
     ofxFFTLive fftLive;
 
     vector<float> fftSmoothed;
@@ -43,8 +44,8 @@ class ofApp : public ofBaseApp{
     string HMD_NAMES[8] = {
       "Xreal Air 2",
       "Meta Quest 3",
-      "Vuzix Z100",
       "Vuzix M4000",
+      "Vuzix Z100",
       "Apple Vision Pro",
       "MOVERIO BT-40S",
       "HoloLens 2",

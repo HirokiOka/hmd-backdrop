@@ -21,6 +21,8 @@ void ofApp::setup(){
   //bgm.play();
   isPlaying = false;
 
+  testSound.load("sysSound.mp3");
+
   ofHideCursor();
 
 
@@ -60,7 +62,7 @@ void ofApp::draw(){
 
   if (pageNum == 0) {
     int yPad = 140;
-    int iconLineWidth = 8;
+    int iconLineWidth = 14;
 
     //Draw HMD ICON
     ofPoint p1 = ofPoint(ofGetWidth()/4, ofGetHeight() / 24);
@@ -355,6 +357,9 @@ void ofApp::keyPressed(int key){
         bgm.play();
         isPlaying = true;
       }
+      break;
+    case 's':
+      testSound.play();
       break;
     default:
       break;
